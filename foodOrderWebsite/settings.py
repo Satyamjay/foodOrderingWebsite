@@ -75,12 +75,12 @@ WSGI_APPLICATION = 'foodOrderWebsite.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'website',
-        'USER': 'postgres',
-        'PASSWORD': 'p7sn3%$W?-',
-        'PORT': '5432',
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'website',
+            'USER': 'postgres',
+            'PASSWORD': 'p7sn3%$W?-',
+            'PORT': '5432',
     }
 }
 
@@ -124,5 +124,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR,  'templates'),
+    os.path.join(BASE_DIR, 'app/templates'),
 )

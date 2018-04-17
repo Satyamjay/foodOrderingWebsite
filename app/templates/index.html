@@ -34,11 +34,11 @@
 
 <!- Customer Singup Form Begin ->
     <div class="col-xs-6">
+        <h2>Customer Signup</h2>
         <div class="col-xs-10">
             <style>
                 .errorlist{ background-color: red;list-style-type: none;}
           </style>
-             <h2>Customer Signup</h2>
             {% url 'form' as the_url %}
             <form action="{{ the_url }}" method="POST">
             {% csrf_token %}

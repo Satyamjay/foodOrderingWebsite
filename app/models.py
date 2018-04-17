@@ -64,6 +64,57 @@ class Customer(models.Model):
         return self.email
 
 
+class Restaurant(models.Model):
+
+    STATES = (
+        ('AP', 'Andhra Pradesh'),
+        ('AR', 'Arunachal Pradesh'),
+        ('AS', 'Assam'),
+        ('BR', 'Bihar'),
+        ('CT', 'Chhattisgarh'),
+        ('GA', 'Goa'),
+        ('GJ', 'Gujarat'),
+        ('HR', 'Haryana'),
+        ('HP', 'Himachal Pradesh'),
+        ('JK', 'Jammu and Kashmir'),
+        ('JH', 'Jharkhand'),
+        ('KA', 'Karnataka'),
+        ('KL', 'Kerala'),
+        ('MP', 'Madhya Pradesh'),
+        ('MH', 'Maharashtra'),
+        ('MN', 'Manipur'),
+        ('ML', 'Meghalaya'),
+        ('MZ', 'Mizoram'),
+        ('NL', 'Nagaland'),
+        ('OR', 'Odisha'),
+        ('PB', 'Punjab'),
+        ('RJ', 'Rajasthan'),
+        ('SK', 'Sikkim'),
+        ('TN', 'Tamil Nadu'),
+        ('TG', 'Telangana'),
+        ('TR', 'Tripura'),
+        ('UT', 'Uttarakhand'),
+        ('UP', 'Uttar Pradesh'),
+        ('WB', 'West Bengal'),
+        ('AN', 'Andaman and Nicobar Islands'),
+        ('CH', 'Chandigarh'),
+        ('DN', 'Dadra and Nagar Haveli'),
+        ('DD', 'Daman and Diu'),
+        ('DL', 'Delhi'),
+        ('LD', 'Lakshadweep'),
+        ('PY', 'Puducherry'),)
+
+    manager_name = models.CharField(max_length=50)
+    email = models.EmailField(max_length=100, unique=True)
+    mobile_no = models.CharField(unique=True, validators=[validate_mobile], max_length=10)
+    state = models.CharField(choices=STATES, max_length=2)
+    city = models.CharField(max_length=20)
+    password = models.CharField(max_length=256)
+
+    def __str__(self):
+        return self.email
+
+
 
 
 # Customer Model Form

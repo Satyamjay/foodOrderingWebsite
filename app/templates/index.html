@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script
 </head>
 <body>
 
@@ -29,7 +29,6 @@
 
 
 <div class="container">
-
 <!- Customer Singup Form Begin ->
     <div class="col-xs-6">
         <h2>Customer Signup</h2>
@@ -37,8 +36,7 @@
             <style>
                 .errorlist{ background-color: red;list-style-type: none;}
           </style>
-            {% url 'form' as the_url %}
-            <form action="{{ the_url }}" method="POST">
+            <form action="" method="POST">
             {% csrf_token %}
                 <div id="cust_sign">
                     <div class="form-group">

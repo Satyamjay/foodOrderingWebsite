@@ -29,7 +29,7 @@ def customer_form(request):
             cust_sign_form.save()
             #Adding User to Firebase
             user = auth.create_user_with_email_and_password(cust_sign_form.cleaned_data['email'], cust_sign_form.cleaned_data['password'])
-            auth.send_email_verification()
+            auth.send_email_verification(user['idToken'])
             # redirect to a new URL:
             return HttpResponseRedirect('/thanks/')
         else:

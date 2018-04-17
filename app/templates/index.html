@@ -30,28 +30,27 @@
 
 <div class="container">
 <!- Customer Singup Form Begin ->
-    <div class="col-xs-6">
+    <div class="col-xs-6" id="customer_signup">
         <h2>Customer Signup</h2>
         <div class="col-xs-10">
             <style>
                 .errorlist{ background-color: red;list-style-type: none;}
           </style>
-            <form action="" method="POST">
+            <form action="" method="POST" >
             {% csrf_token %}
-                <div id="cust_sign">
                     <div class="form-group">
                       {{ form }}
                     </div>
-                    <button  class="btn btn-default" id="hide">SignUp</button>
-                </div>
+                    <button class="btn btn-default" id="customer_signup_of_signup" >SignUp</button>
             </form>
+            <button class="btn btn-default" id="customer_login_of_signup">Login</button>
         </div>
     </div>
 <!- Customer Signup Form End->
 
 
-<!- Restaurant Singup Form Begin ->
-    <div class="col-xs-6">
+<!- Restaurant Signup Form Begin ->
+    <div class="col-xs-6" id="restaurant_signup">
         <div class="col-xs-10">
              <h2>Resturant Signup</h2>
                 <form action="/action_page.php" id="rest_sign">
@@ -80,9 +79,40 @@
     </div>
 <!- Restaurant Signup Form End->
 
+<!- Customer Login Form Start->
+    <div class="col-xs-6"  id="customer_login" hidden>
+        <h2>Customer Login</h2>
+        <div class="col-xs-10">
+            <form action="" method="POST">
+                {% csrf_token %}
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Password:</label>
+                        <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
+                    </div>
+                    <button  class="btn btn-default" id="customer_login_of_login">Login</button>
+            </form>
+            <button  class="btn btn-default" id="customer_signup_of_login">Signup</button>
+        </div>
+    </div>
+<!- Customer Login Form End->
 
+<script>
+    var el = document.getElementById('customer_login_of_signup');
+    var cust_signup = document.getElementById('customer_signup');
+    var cust_login  = document.getElementById('customer_login');
+    var rest_signup = document.getElementById('restaurant_signup');
+    el.onclick = showLogin;
+    function showLogin() {
+        rest_signup.hidden=true;
+        cust_login.hidden=false;
+        cust_signup.hidden=true;
 
-
+    }
+</script>
 
 </div>
 

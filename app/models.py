@@ -67,7 +67,7 @@ class Customer(models.Model):
     def __str__(self):
         return self.email
 
-
+# Restaurant Model
 class Restaurant(models.Model):
 
     STATES = (
@@ -115,14 +115,11 @@ class Restaurant(models.Model):
     state = models.CharField(choices=STATES, max_length=2)
     city = models.CharField(max_length=20)
     pincode = models.CharField(max_length=8, validators=[validate_pincode])
-    full_address = models.CharField(max_length=100)
+    street_address = models.CharField(max_length=100)
     password = models.CharField(max_length=256)
 
     def __str__(self):
         return self.email
-
-
-
 
 # Customer Model Form
 class CustomerForm(ModelForm):
@@ -134,10 +131,31 @@ class CustomerForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
         self.fields['name'].widget.attrs.update({'placeholder': 'Enter Name', 'class': 'form-control'})
         self.fields['email'].widget.attrs.update({'placeholder': 'Enter Email', 'class': 'form-control'})
-        self.fields['mobile_no'].widget.attrs.update({'placeholder': 'Enter Mobile Number   ', 'class': 'form-control'})
+        self.fields['mobile_no'].widget.attrs.update({'placeholder': 'Enter Mobile Numbers', 'class': 'form-control'})
         self.fields['state'].widget.attrs.update({'class': 'form-control'})
         self.fields['city'].widget.attrs.update({'placeholder': 'Enter City', 'class': 'form-control'})
         self.fields['password'].widget.attrs.update({'class': 'form-control', 'type': 'password'})
 
+
+# Restaurant Model Form
+class RestaurantForm(ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
+
+    class Meta:
+        model = Restaurant
+        fields = ['restaurant_name', 'manager_name', 'email', 'mobile_no', 'state', 'city', 'pincode', 'street_address', 'password']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['restaurant_name'].widget.attrs.update({'placeholder': 'Enter Name', 'class': 'form-control'})
+        self.fields['manager_name'].widget.attrs.update({'placeholder': 'Enter Name', 'class': 'form-control'})
+        self.fields['email'].widget.attrs.update({'placeholder': 'Enter Email', 'class': 'form-control'})
+        self.fields['mobile_no'].widget.attrs.update({'placeholder': 'Enter Mobile Number   ', 'class': 'form-control'})
+        self.fields['state'].widget.attrs.update({'class': 'form-control'})
+        self.fields['city'].widget.attrs.update({'placeholder': 'Enter City', 'class': 'form-control'})
+        self.fields['pincode'].widget.attrs.update({'placeholder': 'Enter City', 'class': 'form-control'})
+        self.fields['street_address'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter Address'})
+        self.fields['password'].widget.attrs.update({'class': 'form-control', 'type': 'password'})

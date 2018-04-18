@@ -1,7 +1,7 @@
 from django.forms import modelformset_factory
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
-from app.models import Customer, CustomerForm
+from app.models import CustomerForm, RestaurantForm
 import pyrebase
 import sys
 
@@ -22,7 +22,7 @@ auth = my_firebase.auth()
 
 
 def customer_form(request):
-    if request.method == 'POST':
+    if (request.method == 'POST') and ('customer_signup' in request.POST):
         # create a form instance and populate it with data from the request:
         cust_sign_form = CustomerForm(request.POST, request.FILES)
         # check whether it's valid:
@@ -35,19 +35,28 @@ def customer_form(request):
             # redirect to a new URL:
             return HttpResponseRedirect('/thanks/')
         else:
-            return render(request, 'index.html', {'form': cust_sign_form})
+            form2 = RestaurantForm()
+            return render(request, 'index.html', {'form': cust_sign_form, 'form2': form2})
+
+    elif (request.method == 'POST') and ('restaurant_signup' in request.POST):
+        # create a form instance and populate it with data from the request:
+        restaurant_signup_form = RestaurantForm(request.POST, request.FILES)
+        # check whether it's valid:
+        if restaurant_signup_form.is_valid():
+            # process the data in form.cleaned_data as required
+            restaurant_signup_form.save()
+            #Adding User to Firebase
+            user = auth.create_user_with_email_and_password(restaurant_signup_form.cleaned_data['email'], restaurant_signup_form.cleaned_data['password'])
+            auth.send_email_verification(user['idToken'])
+            # redirect to a new URL:
+            return HttpResponseRedirect('/thanks2/')
+        else:
+            form = CustomerForm()
+            return render(request, 'index.html', {'form': form, 'form2': restaurant_signup_form})
 
     # if a GET (or any other method) we'll create a blank form
     else:
         form = CustomerForm()
-        return render(request, 'index.html', {'form': form})
+        form2 = RestaurantForm()
+        return render(request, 'index.html', {'form': form, 'form2': form2})
 
-
-def customer_login(request):
-    if request.method == 'POST':
-        return HttpResponse('/thanks/')
-
-    else:
-        print >>sys.stderr, 'Goodbye, cruel world!'
-        form = CustomerForm()
-        return render(request, 'index.html', {'form': form})

@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns=[
 
-    url(r'', views.customer_form)
+    url(r'', views.customer_form),
+    url(r'login/', views.customer_login, name='custLogin')
 
 ]

@@ -1,9 +1,11 @@
 from django.forms import modelformset_factory
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from app.models import Customer, CustomerForm
 import pyrebase
+import sys
 
+# Get an instance of a logger
 config = {
     "apiKey": "AIzaSyAwXggcEjMEkDKqHHKiQ4FK8oots1XGr_c",
     "authDomain": "foodorder-94c40.firebaseapp.com",
@@ -37,5 +39,15 @@ def customer_form(request):
 
     # if a GET (or any other method) we'll create a blank form
     else:
+        form = CustomerForm()
+        return render(request, 'index.html', {'form': form})
+
+
+def customer_login(request):
+    if request.method == 'POST':
+        return HttpResponse('/thanks/')
+
+    else:
+        print >>sys.stderr, 'Goodbye, cruel world!'
         form = CustomerForm()
         return render(request, 'index.html', {'form': form})

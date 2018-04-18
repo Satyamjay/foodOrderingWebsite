@@ -6,7 +6,11 @@ from django.forms import ModelForm
 # Validate function to validate mobile number
 
 def validate_mobile(value):
-    if not ((value.isdigit()) or (len(value) == 10)):
+    if not (value.isdigit()):
+        raise ValidationError('%(value)s is not a valid mobile number', params={'value': value},)
+
+def validate_pincode(value):
+    if not (value.isdigit()):
         raise ValidationError('%(value)s is not a valid mobile number', params={'value': value},)
 
 
@@ -104,11 +108,14 @@ class Restaurant(models.Model):
         ('LD', 'Lakshadweep'),
         ('PY', 'Puducherry'),)
 
+    restaurant_name = models.CharField(max_length=100)
     manager_name = models.CharField(max_length=50)
     email = models.EmailField(max_length=100, unique=True)
     mobile_no = models.CharField(unique=True, validators=[validate_mobile], max_length=10)
     state = models.CharField(choices=STATES, max_length=2)
     city = models.CharField(max_length=20)
+    pincode = models.CharField(max_length=8, validators=[validate_pincode])
+    full_address = models.CharField(max_length=100)
     password = models.CharField(max_length=256)
 
     def __str__(self):

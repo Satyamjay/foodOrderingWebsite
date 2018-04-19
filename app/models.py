@@ -148,7 +148,7 @@ class RestaurantForm(ModelForm):
 
     class Meta:
         model = Restaurant
-        fields = ['restaurant_name', 'manager_name', 'email', 'mobile_no', 'state', 'city', 'pincode', 'street_address', 'password']
+        fields = ['restaurant_name', 'manager_name', 'email', 'mobile_no', 'state', 'city', 'pincode', 'street_address', 'password', 'unique_id']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

@@ -56,12 +56,12 @@
     <div class="col-xs-6" id="restaurant_signup">
         <div class="col-xs-10">
              <h2>Restaurant Signup</h2>
-                <form action="/action_page.php" id="rest_sign">
+                <form action="" id="rest_sign" method="post">
                     {% csrf_token %}
                     <div class="form-group">
                       {{ form2 }}
                     </div>
-                    <button  class="btn btn-default" id="hide" name="restaurant_signup">SignUp</button>
+                    <button  class="btn btn-default" id="hide" name="restaurant_signup" onclick="populate()">SignUp</button>
                 </form>
         </div>
     </div>
@@ -71,7 +71,10 @@
 </body>
 
 <script>
-    unique_id = document.getElementById()
+    function populate() {
+        unique_id = document.getElementById('id_unique_id');
+        unique_id.value = "vale";
+    }
 </script>
 
 

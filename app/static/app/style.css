@@ -1,12 +1,15 @@
 h2 {
-    color: #000000;
+    color: #f5dd5d;
 }
 
 #main_div {
     background-color: rgba(0,0,0,.5);
-    color: #000000;
+    color: #ffffff;
 }
 
 body {
-    background : white url("img/bgImage.png") no-repeat;
+    background: white url("img/bgImage.png") no-repeat;
+    background-size:cover;
+
 }
+

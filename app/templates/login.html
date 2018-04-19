@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'app/style.css' %}" />
+</head>
+<body>
+
+<header id="home" class="home-section">
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">WebSiteName</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="#">Sign Up</a></li>
+      <li><a href="#">Login</a></li>
+
+    </ul>
+  </div>
+</nav>
+</header>
+
+<div class="container" id="main_div">
+    <!- Customer Login Form Start->
+    <div class="col-xs-6" id="customer_login">
+        <h2>Customer Login</h2>
+        <div class="col-xs-10">
+            <style>
+                .errorlist{ background-color: red;list-style-type: none;}
+          </style>
+            <form action="" method="POST" >
+            {% csrf_token %}
+                    <div class="form-group">
+                      <div>
+                          <label for="email">Email id:</label>
+                          <input type="email" id="cust_email" class="form-control" placeholder="Enter Email">
+                      </div>
+                      <div>
+                          <label for="password">Password:</label>
+                          <input type="password" id="cust_password" class="form-control" placeholder="Enter Password">
+                      </div>
+                    </div>
+                    <button class="btn btn-default" id="customer_login" name="customer_login" style="">Login</button>
+            </form>
+            <h4>Create New Account <a href="{% url 'signup' %}">SignUp</a></h4>
+        </div>
+    </div>
+        <!- Customer Login Form End->
+
+
+
+
+    <!-Restaurant login start-->
+    <div class="col-xs-6" id="restaurant_login">
+        <h2>Restaurant Login</h2>
+        <div class="col-xs-10">
+            <style>
+                .errorlist{ background-color: red;list-style-type: none;}
+          </style>
+            <form action="" method="POST" >
+            {% csrf_token %}
+                    <div class="form-group">
+                      <div>
+                          <label for="email">Email id:</label>
+                          <input type="email" id="rest_email" class="form-control" placeholder="Enter Email">
+                      </div>
+                      <div>
+                          <label for="password">Password:</label>
+                          <input type="password" id="rest_password" class="form-control" placeholder="Enter Password">
+                      </div>
+                    </div>
+                    <button class="btn btn-default" id="restaurant_login" name="restaurant_login" style="">Login</button>
+            </form>
+            <h4>Create New Account <a href="{% url 'signup' %}">SignUp</a></h4>
+        </div>
+    </div>
+       <!- Restaurant Login Form End->
+
+
+
+
+
+</div>
+</body>
+</html>

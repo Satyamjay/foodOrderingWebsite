@@ -21,7 +21,7 @@ auth = my_firebase.auth()
 
 
 
-def customer_form(request):
+def signup_page(request):
     if (request.method == 'POST') and ('customer_signup' in request.POST):
         # create a form instance and populate it with data from the request:
         cust_sign_form = CustomerForm(request.POST, request.FILES)
@@ -60,3 +60,7 @@ def customer_form(request):
         form2 = RestaurantForm()
         return render(request, 'signup.html', {'form': form, 'form2': form2})
 
+
+
+def login_page(request):
+    return render(request, 'login.html', {})

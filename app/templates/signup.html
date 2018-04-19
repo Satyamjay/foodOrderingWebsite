@@ -29,8 +29,8 @@
 </nav>
 </header>
 
-<!- Customer Signup Form Start->
 <div class="container" id="main_div">
+    <!- Customer Signup Form Start->
     <div class="col-xs-6" id="customer_signup">
         <h2>Customer Signup</h2>
         <div class="col-xs-10">
@@ -44,7 +44,7 @@
                     </div>
                     <button class="btn btn-default" id="customer_signup_of_signup" name="customer_signup" style="">SignUp</button>
             </form>
-            <h4>Already Have Account? <a href="">SignIn</a></h4>
+            <h4>Already Have Account? <a href="{% url 'login' %}">SignIn</a></h4>
         </div>
     </div>
 <!- Customer Signup Form End->
@@ -62,7 +62,7 @@
                       {{ form2 }}
                     </div>
                     <button  class="btn btn-default" id="hide" name="restaurant_signup" onclick="populate()">SignUp</button>
-                    <h4>Already Have Account? <a href="">SignIn</a></h4>
+                    <h4>Already Have Account? <a href="{% url 'login' %}">SignIn</a></h4>
                 </form>
         </div>
     </div>

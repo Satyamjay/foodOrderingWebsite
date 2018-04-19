@@ -117,6 +117,7 @@ class Restaurant(models.Model):
     pincode = models.CharField(max_length=8, validators=[validate_pincode])
     street_address = models.CharField(max_length=100)
     password = models.CharField(max_length=256)
+    unique_id = models.CharField(max_length=256)
 
     def __str__(self):
         return self.email
@@ -143,6 +144,7 @@ class CustomerForm(ModelForm):
 # Restaurant Model Form
 class RestaurantForm(ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
+    unique_id = forms.CharField(widget=forms.HiddenInput())
 
     class Meta:
         model = Restaurant

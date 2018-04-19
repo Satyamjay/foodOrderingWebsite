@@ -1,3 +1,12 @@
 h2 {
-    color: green;
+    color: #000000;
+}
+
+#main_div {
+    background-color: rgba(0,0,0,.5);
+    color: #000000;
+}
+
+body {
+    background : white url("img/bgImage.png") no-repeat;
 }

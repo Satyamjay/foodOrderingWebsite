@@ -36,7 +36,7 @@ def customer_form(request):
             return HttpResponseRedirect('/thanks/')
         else:
             form2 = RestaurantForm()
-            return render(request, 'index.html', {'form': cust_sign_form, 'form2': form2})
+            return render(request, 'signup.html', {'form': cust_sign_form, 'form2': form2})
 
     elif (request.method == 'POST') and ('restaurant_signup' in request.POST):
         # create a form instance and populate it with data from the request:
@@ -52,11 +52,11 @@ def customer_form(request):
             return HttpResponseRedirect('/thanks2/')
         else:
             form = CustomerForm()
-            return render(request, 'index.html', {'form': form, 'form2': restaurant_signup_form})
+            return render(request, 'signup.html', {'form': form, 'form2': restaurant_signup_form})
 
     # if a GET (or any other method) we'll create a blank form
     else:
         form = CustomerForm()
         form2 = RestaurantForm()
-        return render(request, 'index.html', {'form': form, 'form2': form2})
+        return render(request, 'signup.html', {'form': form, 'form2': form2})
 

@@ -3,7 +3,9 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.forms import ModelForm
 
-################################################-----------------VALIDATORS----------###################################################################
+# ###############################################-----------------VALIDATORS----------------##########################################################
+
+
 # Validate function to validate mobile number
 def validate_mobile(value):
     if not (value.isdigit()):
@@ -17,7 +19,7 @@ def validate_pincode(value):
 
 def validate_state(value):
     for state in AvailableState.objects.all():
-        if state.state_name.lower() == value.lower():
+        if state.state_code.lower() == value.lower():
             return
     raise ValidationError('Our Service is not available in this state', params={'value': value},)
 
@@ -28,46 +30,8 @@ def validate_city(value):
             return
     raise ValidationError('Our Service is not available in this city', params={'value': value},)
 
-#####################################################------------MODELS--------------####################################################################
 
-STATES = (
-        ('AP', 'Andhra Pradesh'),
-        ('AR', 'Arunachal Pradesh'),
-        ('AS', 'Assam'),
-        ('BR', 'Bihar'),
-        ('CT', 'Chhattisgarh'),
-        ('GA', 'Goa'),
-        ('GJ', 'Gujarat'),
-        ('HR', 'Haryana'),
-        ('HP', 'Himachal Pradesh'),
-        ('JK', 'Jammu and Kashmir'),
-        ('JH', 'Jharkhand'),
-        ('KA', 'Karnataka'),
-        ('KL', 'Kerala'),
-        ('MP', 'Madhya Pradesh'),
-        ('MH', 'Maharashtra'),
-        ('MN', 'Manipur'),
-        ('ML', 'Meghalaya'),
-        ('MZ', 'Mizoram'),
-        ('NL', 'Nagaland'),
-        ('OR', 'Odisha'),
-        ('PB', 'Punjab'),
-        ('RJ', 'Rajasthan'),
-        ('SK', 'Sikkim'),
-        ('TN', 'Tamil Nadu'),
-        ('TG', 'Telangana'),
-        ('TR', 'Tripura'),
-        ('UT', 'Uttarakhand'),
-        ('UP', 'Uttar Pradesh'),
-        ('WB', 'West Bengal'),
-        ('AN', 'Andaman and Nicobar Islands'),
-        ('CH', 'Chandigarh'),
-        ('DN', 'Dadra and Nagar Haveli'),
-        ('DD', 'Daman and Diu'),
-        ('DL', 'Delhi'),
-        ('LD', 'Lakshadweep'),
-        ('PY', 'Puducherry'),)
-
+# ####################################################----------------MODELS--------------####################################################################
 
 # Available States Model
 class AvailableState(models.Model):
@@ -93,8 +57,8 @@ class Customer(models.Model):
     name = models.CharField(max_length=50)
     email = models.EmailField(max_length=100, unique=True)
     mobile_no = models.CharField(unique=True, validators=[validate_mobile], max_length=10)
-    state = models.CharField(max_length=20, validators=[validate_state], choices=STATES)
-    city = models.CharField(max_length=20, validators=[validate_city])
+    state = models.ForeignKey(AvailableState, on_delete=models.CASCADE, max_length=20, validators=[validate_state])
+    city = models.ForeignKey(Cities, on_delete=models.CASCADE, max_length=20, validators=[validate_city])
     password = models.CharField(max_length=256)
 
     def __str__(self):
@@ -108,8 +72,8 @@ class Restaurant(models.Model):
     manager_name = models.CharField(max_length=50)
     email = models.EmailField(max_length=100, unique=True)
     mobile_no = models.CharField(unique=True, validators=[validate_mobile], max_length=10)
-    state = models.CharField(max_length=20, validators=[validate_state], choices=STATES)
-    city = models.CharField(max_length=20, validators=[validate_city])
+    state = models.ForeignKey(AvailableState, on_delete=models.CASCADE)
+    city = models.ForeignKey(Cities, on_delete=models.CASCADE, max_length=20)
     pincode = models.CharField(max_length=8, validators=[validate_pincode])
     street_address = models.CharField(max_length=100)
     password = models.CharField(max_length=256)
@@ -120,7 +84,7 @@ class Restaurant(models.Model):
 
 
 
-#######################################-----------------------MODEL FORMS---------------------------####################################################
+# ##########################################-----------------------MODEL FORMS---------------------------####################################################
 
 # Customer Model Form
 class CustomerForm(ModelForm):

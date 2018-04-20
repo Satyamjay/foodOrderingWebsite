@@ -45,7 +45,7 @@ def signup_page(request):
         if restaurant_signup_form.is_valid():
             # process the data in form.cleaned_data as required
             restaurant_signup_form.save()
-            #Adding User to Firebase
+            # Adding User to Firebase
             user = auth.create_user_with_email_and_password(restaurant_signup_form.cleaned_data['email'], restaurant_signup_form.cleaned_data['password'])
             auth.send_email_verification(user['idToken'])
             # redirect to a new URL:

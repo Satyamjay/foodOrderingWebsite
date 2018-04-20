@@ -3,18 +3,23 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.forms import ModelForm
 
-# ###############################################-----------------VALIDATORS----------------##########################################################
+# ###############################################-----------------VALIDATORS----------------##################################################################
 
 
-# Validate function to validate mobile number
+# Validator for mobile number
 def validate_mobile(value):
     if not (value.isdigit()):
         raise ValidationError('%(value)s is not a valid mobile number', params={'value': value},)
 
 
+# Validator for pincode
 def validate_pincode(value):
     if not (value.isdigit()):
         raise ValidationError('%(value)s is not a valid Pincode', params={'value': value},)
+
+# Validator for password
+
+
 
 
 

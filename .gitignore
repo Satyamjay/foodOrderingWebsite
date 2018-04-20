@@ -2,3 +2,4 @@
 ./__pycache__/*
 ./app/__pycache__/*
 ./foodOrderWebsite/__pycache__/*
+./app/migrations/__pycache__/*

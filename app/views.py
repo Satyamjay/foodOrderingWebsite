@@ -1,7 +1,7 @@
 from django.forms import modelformset_factory
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
-from app.models import CustomerForm, RestaurantForm
+from app.models import CustomerForm, RestaurantForm, Customer
 import pyrebase
 import sys
 
@@ -63,4 +63,17 @@ def signup_page(request):
 
 
 def login_page(request):
-    return render(request, 'login.html', {})
+    if (request.method == 'POST') and ('customer_login' in request.POST):
+        email=request.POST['email']
+        password=request.POST['password']
+        for customer in Customer.objects.all():
+            if(email==customer.email and password==customer.password):
+                return HttpResponseRedirect('/index/')
+
+        return render(request, 'login.html', {'error':True})
+
+
+
+
+
+    return render(request, 'login.html', {'error':False})

@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from app.models import CustomerForm, RestaurantForm, Customer
 import pyrebase
-import sys
+from app.loginForms import LoginForm
 
 # Get an instance of a logger
 config = {
@@ -61,20 +61,23 @@ def signup_page(request):
         return render(request, 'signup.html', {'form': form, 'form2': form2})
 
 
-
 def login_page(request):
     if (request.method == 'POST') and ('customer_login' in request.POST):
-        email=request.POST['email']
-        password=request.POST['password']
+        email = request.POST['email']
+        password = request.POST['password']
         for customer in Customer.objects.all():
-            if(email==customer.email and password==customer.password):
+            if email == customer.email and password == customer.password:
                 return HttpResponseRedirect('/index/')
+        return render(request, 'login.html', {'error': True, 'form1': LoginForm(), 'form2': LoginForm()})
 
-        return render(request, 'login.html', {'error':True})
+    elif (request.method == 'POST') and ('restaurant_login' in request.POST):
+        email = request.POST['email']
+        password = request.POST['password']
+        for customer in Customer.objects.all():
+            if email == customer.email and password == customer.password:
+                return HttpResponseRedirect('/index/')
+        return render(request, 'login.html', {'error': True, 'form1': LoginForm(), 'form2': LoginForm()})
 
-
-
-
-
-    return render(request, 'login.html', {'error':False})
+    else:
+        return render(request, 'login.html', {'error': False, 'form1': LoginForm(), 'form2': LoginForm()})
 

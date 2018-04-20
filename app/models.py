@@ -17,19 +17,6 @@ def validate_pincode(value):
         raise ValidationError('%(value)s is not a valid Pincode', params={'value': value},)
 
 
-def validate_state(value):
-    for state in AvailableState.objects.all():
-        if state.state_code.lower() == value.lower():
-            return
-    raise ValidationError('Our Service is not available in this state', params={'value': value},)
-
-
-def validate_city(value):
-    for city in Cities.objects.all():
-        if city.city_name.lower() == value.lower():
-            return
-    raise ValidationError('Our Service is not available in this city', params={'value': value},)
-
 
 # ####################################################----------------MODELS--------------####################################################################
 
@@ -57,8 +44,8 @@ class Customer(models.Model):
     name = models.CharField(max_length=50)
     email = models.EmailField(max_length=100, unique=True)
     mobile_no = models.CharField(unique=True, validators=[validate_mobile], max_length=10)
-    state = models.ForeignKey(AvailableState, on_delete=models.CASCADE, max_length=20, validators=[validate_state])
-    city = models.ForeignKey(Cities, on_delete=models.CASCADE, max_length=20, validators=[validate_city])
+    state = models.ForeignKey(AvailableState, on_delete=models.CASCADE, max_length=20)
+    city = models.ForeignKey(Cities, on_delete=models.CASCADE, max_length=20)
     password = models.CharField(max_length=256)
 
     def __str__(self):

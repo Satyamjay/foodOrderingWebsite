@@ -63,4 +63,9 @@ def signup_page(request):
 
 
 def login_page(request):
+    if (request.method == 'POST') and ('customer_login' in request.POST):
+        pass
+    elif(request.method == 'POST') and ('restaurant_login' in request.POST):
+        pass
+
     return render(request, 'login.html', {})

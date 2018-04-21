@@ -29,7 +29,7 @@ def signup_page(request):
         if cust_sign_form.is_valid():
             # process the data in form.cleaned_data as required
             cust_sign_form.save()
-            #Adding User to Firebase
+            # Adding User to Firebase
             user = auth.create_user_with_email_and_password(cust_sign_form.cleaned_data['email'], cust_sign_form.cleaned_data['password'])
             auth.send_email_verification(user['idToken'])
             # redirect to a new URL:

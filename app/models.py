@@ -25,10 +25,12 @@ def validate_pincode(value):
 
 # ####################################################----------------MODELS--------------####################################################################
 
+
 # Available States Model
-class AvailableState(models.Model):
+class state(models.Model):
     state_code = models.CharField(max_length=2, primary_key=True)
     state_name = models.CharField(max_length=20)
+    available = models.NullBooleanField()
 
     def __str__(self):
         return self.state_name
@@ -36,7 +38,7 @@ class AvailableState(models.Model):
 
 # Available Cities Model
 class Cities(models.Model):
-    belongs_to = models.ForeignKey(AvailableState, on_delete=models.CASCADE)
+    belongs_to = models.ForeignKey(state, on_delete=models.CASCADE)
     city_name = models.CharField(max_length=50)
 
     def __str__(self):
@@ -49,7 +51,7 @@ class Customer(models.Model):
     name = models.CharField(max_length=50)
     email = models.EmailField(max_length=100, unique=True)
     mobile_no = models.CharField(unique=True, validators=[validate_mobile], max_length=10)
-    state = models.ForeignKey(AvailableState, on_delete=models.CASCADE, max_length=20)
+    state = models.ForeignKey(state, on_delete=models.CASCADE, max_length=20)
     city = models.ForeignKey(Cities, on_delete=models.CASCADE, max_length=20)
     password = models.CharField(max_length=256)
 
@@ -64,7 +66,7 @@ class Restaurant(models.Model):
     manager_name = models.CharField(max_length=50)
     email = models.EmailField(max_length=100, unique=True)
     mobile_no = models.CharField(unique=True, validators=[validate_mobile], max_length=10)
-    state = models.ForeignKey(AvailableState, on_delete=models.CASCADE)
+    state = models.ForeignKey(state, on_delete=models.CASCADE)
     city = models.ForeignKey(Cities, on_delete=models.CASCADE, max_length=20)
     pincode = models.CharField(max_length=8, validators=[validate_pincode])
     street_address = models.CharField(max_length=100)

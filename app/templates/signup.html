@@ -71,11 +71,31 @@
 </div>
 </body>
 
+
+<!-generates unique id for the restaurant ->
+
 <script>
+
+    function uniqueId() {
+    var date = Date.now();
+
+    // If created at same millisecond as previous
+    if (date <= uniqueId.previous) {
+        date = ++uniqueId.previous;
+    } else {
+        uniqueId.previous = date;
+    }
+
+    return date;
+}
+    uniqueId.previous = 0;
+
     function populate() {
         unique_id = document.getElementById('id_unique_id');
-        unique_id.value = "vale";
+        val=uniqueId();
+        unique_id.value = val;
     }
+
 </script>
 
 

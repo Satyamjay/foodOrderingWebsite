@@ -2,35 +2,19 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.forms import ModelForm
+import re
 
 # ###############################################-----------------VALIDATORS----------------##################################################################
-
-
-# Validator for mobile number
-def validate_mobile(value):
-    if not (value.isdigit()):
-        raise ValidationError('%(value)s is not a valid mobile number', params={'value': value},)
-
-
-# Validator for pincode
-def validate_pincode(value):
-    if not (value.isdigit()):
-        raise ValidationError('%(value)s is not a valid Pincode', params={'value': value},)
-
-# Validator for password
-
-
-
 
 
 # ####################################################----------------MODELS--------------####################################################################
 
 
 # Available States Model
-class state(models.Model):
+class State(models.Model):
     state_code = models.CharField(max_length=2, primary_key=True)
     state_name = models.CharField(max_length=20)
-    available = models.NullBooleanField()
+    available = models.NullBooleanField(default=False)
 
     def __str__(self):
         return self.state_name
@@ -38,7 +22,7 @@ class state(models.Model):
 
 # Available Cities Model
 class Cities(models.Model):
-    belongs_to = models.ForeignKey(state, on_delete=models.CASCADE)
+    belongs_to = models.ForeignKey(State, on_delete=models.CASCADE)
     city_name = models.CharField(max_length=50)
 
     def __str__(self):
@@ -50,8 +34,8 @@ class Customer(models.Model):
 
     name = models.CharField(max_length=50)
     email = models.EmailField(max_length=100, unique=True)
-    mobile_no = models.CharField(unique=True, validators=[validate_mobile], max_length=10)
-    state = models.ForeignKey(state, on_delete=models.CASCADE, max_length=20)
+    mobile_no = models.CharField(unique=True, max_length=10)
+    state = models.ForeignKey(State, on_delete=models.CASCADE, max_length=20)
     city = models.ForeignKey(Cities, on_delete=models.CASCADE, max_length=20)
     password = models.CharField(max_length=256)
 
@@ -65,16 +49,30 @@ class Restaurant(models.Model):
     restaurant_name = models.CharField(max_length=100)
     manager_name = models.CharField(max_length=50)
     email = models.EmailField(max_length=100, unique=True)
-    mobile_no = models.CharField(unique=True, validators=[validate_mobile], max_length=10)
-    state = models.ForeignKey(state, on_delete=models.CASCADE)
+    mobile_no = models.CharField(unique=True, max_length=10)
+    state = models.ForeignKey(State, on_delete=models.CASCADE)
     city = models.ForeignKey(Cities, on_delete=models.CASCADE, max_length=20)
-    pincode = models.CharField(max_length=8, validators=[validate_pincode])
+    pincode = models.CharField(max_length=8)
     street_address = models.CharField(max_length=100)
     password = models.CharField(max_length=256)
     unique_id = models.CharField(max_length=256)
 
     def __str__(self):
         return self.email
+
+###########################################-----------------------HELPER FUNCTIONS FOR FORMS----------------------#####################################################
+
+
+def state_choices():
+        temp = ()
+        States = ()
+        for state in State.objects.filter(available='t'):
+            temp += (state.state_code,)
+            temp += (state.state_name,)
+            States += (temp,)
+        return States
+
+
 
 
 
@@ -83,6 +81,7 @@ class Restaurant(models.Model):
 # Customer Model Form
 class CustomerForm(ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
+    state = forms.ChoiceField(choices=state_choices)
 
     class Meta:
         model = Customer

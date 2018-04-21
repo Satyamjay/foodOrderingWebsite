@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from app.models import CustomerForm, RestaurantForm, Customer
 import pyrebase
-from app.loginForms import LoginForm
+from app.LoginForms import LoginForm
 
 # Get an instance of a logger
 config = {

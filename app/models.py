@@ -4,10 +4,10 @@ from django.db import models
 from django.forms import ModelForm
 import re
 
-# ###############################################-----------------VALIDATORS----------------##################################################################
+# ######################################################################################-----------------VALIDATORS----------------#################################################################################
 
 
-# ####################################################----------------MODELS--------------####################################################################
+# ######################################################################################--------------------MODELS-----------------#################################################################################
 
 
 # Available States Model
@@ -35,7 +35,7 @@ class Customer(models.Model):
     name = models.CharField(max_length=50)
     email = models.EmailField(max_length=100, unique=True)
     mobile_no = models.CharField(unique=True, max_length=10)
-    state = models.ForeignKey(State, on_delete=models.CASCADE, max_length=20)
+    state = models.ForeignKey(State, on_delete=models.CASCADE, max_length=20, limit_choices_to={'available': 't'})
     city = models.ForeignKey(Cities, on_delete=models.CASCADE, max_length=20)
     password = models.CharField(max_length=256)
 
@@ -60,28 +60,17 @@ class Restaurant(models.Model):
     def __str__(self):
         return self.email
 
-###########################################-----------------------HELPER FUNCTIONS FOR FORMS----------------------#####################################################
-
-
-def state_choices():
-        temp = ()
-        States = ()
-        for state in State.objects.filter(available='t'):
-            temp += (state.state_code,)
-            temp += (state.state_name,)
-            States += (temp,)
-        return States
+# ##########################################-----------------------HELPER FUNCTIONS FOR FORMS----------------------#####################################################
 
 
 
 
 
-# ##########################################-----------------------MODEL FORMS---------------------------####################################################
+# ##########################################-----------------------MODEL FORMS---------------------------################################################################
 
 # Customer Model Form
 class CustomerForm(ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
-    state = forms.ChoiceField(choices=state_choices)
 
     class Meta:
         model = Customer

@@ -1,7 +1,7 @@
 from django.forms import modelformset_factory
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
-from app.models import CustomerForm, RestaurantForm, Customer
+from app.models import CustomerForm, RestaurantForm, Customer, Restaurant
 import pyrebase
 from app.loginForms import LoginForm
 
@@ -35,8 +35,7 @@ def signup_page(request):
             # redirect to a new URL:
             return HttpResponseRedirect('/thanks/')
         else:
-            form2 = RestaurantForm()
-            return render(request, 'signup.html', {'form': cust_sign_form, 'form2': form2})
+            return render(request, 'signup.html', {'form': cust_sign_form, 'form2': RestaurantForm()})
 
     elif (request.method == 'POST') and ('restaurant_signup' in request.POST):
         # create a form instance and populate it with data from the request:
@@ -51,14 +50,11 @@ def signup_page(request):
             # redirect to a new URL:
             return HttpResponseRedirect('/thanks2/')
         else:
-            form = CustomerForm()
-            return render(request, 'signup.html', {'form': form, 'form2': restaurant_signup_form})
+            return render(request, 'signup.html', {'form': CustomerForm(), 'form2': restaurant_signup_form})
 
     # if a GET (or any other method) we'll create a blank form
     else:
-        form = CustomerForm()
-        form2 = RestaurantForm()
-        return render(request, 'signup.html', {'form': form, 'form2': form2})
+        return render(request, 'signup.html', {'form': CustomerForm(), 'form2': RestaurantForm()})
 
 
 def login_page(request):
@@ -66,15 +62,19 @@ def login_page(request):
         email = request.POST['email']
         password = request.POST['password']
         for customer in Customer.objects.all():
-            if email == customer.email and password == customer.password:
+            if email == customer.email:
+                try:
+                    user = auth.sign_in_with_email_and_password(email, password)
+                except:
+                    return render(request, 'login.html', {'error': True, 'form1': LoginForm(), 'form2': LoginForm()})
                 return HttpResponseRedirect('/index/')
         return render(request, 'login.html', {'error': True, 'form1': LoginForm(), 'form2': LoginForm()})
 
     elif (request.method == 'POST') and ('restaurant_login' in request.POST):
         email = request.POST['email']
         password = request.POST['password']
-        for customer in Customer.objects.all():
-            if email == customer.email and password == customer.password:
+        for restaurant in Restaurant.objects.all():
+            if email == restaurant.email and password == restaurant.password:
                 return HttpResponseRedirect('/index/')
         return render(request, 'login.html', {'error': True, 'form1': LoginForm(), 'form2': LoginForm()})
 
